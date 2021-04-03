@@ -22,8 +22,8 @@ app.post('/', JwtValidationMiddleware, busboyMiddleware, async (req, res) => {
         }
 
         const fullResult = await client.documentTextDetection(file.buffer)
-        const result = { text: fullResult[0].fullTextAnnotation.text }
-        res.status(200).json(result)
+        const text = fullResult[0].fullTextAnnotation ? fullResult[0].fullTextAnnotation.text : ''
+        res.status(200).json({ text })
     } catch (ex) {
         handleApiError(ex, res)
     }
